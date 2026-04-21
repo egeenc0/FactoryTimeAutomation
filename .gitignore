@@ -1,0 +1,17 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+appsettings.*.local.json
+
+# Node / Vue
+client/node_modules/
+client/dist/
+*.log
+npm-debug.log*
+
+# OS
+Thumbs.db
+.DS_Store
