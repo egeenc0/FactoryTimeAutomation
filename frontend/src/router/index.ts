@@ -12,6 +12,12 @@ const router = createRouter({
       meta: { title: 'Çalışan girişi' },
     },
     {
+      path: '/admin',
+      name: 'admin-panel',
+      component: () => import('../views/AdminPanelView.vue'),
+      meta: { title: 'Yönetici paneli' },
+    },
+    {
       path: '/uretim/:calisanId',
       name: 'uretim-giris',
       component: UretimGirisView,

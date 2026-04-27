@@ -10,7 +10,7 @@ A small **shop-floor data entry** web app for factories that want to replace pap
 
 1. **Employee step** — Enter a positive numeric employee ID to continue.
 2. **Production step** — Choose data type (resistance decimal or free-text placeholder), machine type (e.g. lathe, CNC, press), machine name, and a time slot. Recommended and alternate slots are suggested from the server; a full list is available in a dropdown.
-3. **API** — `GET /api/uretim/saat-dilimleri` returns slot labels; `POST /api/uretim/kayitlar` saves a validated row to `UretimKayitlari`. A sample `GET /api/urunler` and `GET /api/health` exist for infrastructure checks.
+3. **API** — `GET /api/uretim/saat-dilimleri` returns slot labels; `POST /api/uretim/kayitlar` saves a row; `GET /api/uretim/kayit-ozet` lists the latest production rows (admin grid). `GET /api/urunler` and `GET /api/health` are sample checks.
 
 ---
 
@@ -31,9 +31,16 @@ A small **shop-floor data entry** web app for factories that want to replace pap
 
 ---
 
-## Configuration
+## Configuration (SQL Server)
 
-Edit `src/backend/appsettings.Development.json` and set `ConnectionStrings:DefaultConnection` for your SQL Server (SQL authentication, Windows authentication, etc.).
+**Default (Windows):** `appsettings.Development.json` uses **SQL Server LocalDB** (`(localdb)\MSSQLLocalDB`) and **Windows authentication** — no `sa` password. Install [SQL Server Express LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) (often already present with Visual Studio) or the full **SQL Server / Express** stack.
+
+- **Custom server (Docker, named instance, `sa` user):** override the connection string without committing secrets:
+  ```powershell
+  cd src/backend
+  dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Database=FabrikaDb_Dev;User Id=sa;Password=***;TrustServerCertificate=True;Encrypt=True;"
+  ```
+- **Linux / macOS:** LocalDB is not available; use [SQL Server in Docker](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-setup) and point `ConnectionStrings:DefaultConnection` at that instance (or user secrets as above).
 
 ---
 

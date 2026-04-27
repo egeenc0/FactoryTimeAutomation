@@ -9,3 +9,8 @@ GET {{fabrikaApiHost}}/api/urunler
 Accept: application/json
 
 ###
+
+GET {{fabrikaApiHost}}/api/uretim/kayit-ozet
+Accept: application/json
+
+###

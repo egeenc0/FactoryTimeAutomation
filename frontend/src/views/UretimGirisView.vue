@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import axios from 'axios'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { http } from '../api/http'
+import { http, kullaniciHataOzet } from '../api/http'
 
 const props = defineProps<{ calisanId: string }>()
 const router = useRouter()
@@ -50,8 +49,8 @@ async function dilimleriYenile(): Promise<void> {
     if (!secilenDilim.value || !tumDilimler.value.includes(secilenDilim.value)) {
       secilenDilim.value = data.onerilenDilim
     }
-  } catch {
-    dilimApiHata.value = 'Saat dilimleri sunucudan alınamadı. Bağlantıyı kontrol edin.'
+  } catch (err) {
+    dilimApiHata.value = kullaniciHataOzet(err)
   } finally {
     dilimYukleniyor.value = false
   }
@@ -110,14 +109,7 @@ async function gonder(): Promise<void> {
     const { data } = await http.post<{ id: number }>('/api/uretim/kayitlar', payload)
     alert(`Kayıt tamamlandı (sunucu Id: ${data.id}).`)
   } catch (err: unknown) {
-    if (axios.isAxiosError(err) && err.response?.data && typeof err.response.data === 'object') {
-      const d = err.response.data as { error?: string }
-      if (d.error) {
-        alert(d.error)
-        return
-      }
-    }
-    alert('Kayıt gönderilemedi.')
+    alert(kullaniciHataOzet(err))
   } finally {
     gonderiliyor.value = false
   }

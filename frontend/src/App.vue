@@ -9,6 +9,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <h1 class="marka">Fabrika veri girişi</h1>
         <nav class="nav">
           <RouterLink to="/" class="nav-link">Çalışan girişi</RouterLink>
+          <RouterLink to="/admin" class="nav-link">Kayıtlar</RouterLink>
         </nav>
       </div>
     </header>

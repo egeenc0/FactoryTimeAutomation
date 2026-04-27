@@ -4,6 +4,7 @@ using Fabrika.Api.Models;
 using Fabrika.Api.Services;
 using Fabrika.Api.Validation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Fabrika.Api.Controllers;
 
@@ -24,9 +25,7 @@ public class UretimController(ApplicationDbContext db) : ControllerBase
         return Ok(new SaatDilimleriResponse(tumDilimler, onerilenDilim, alternatifDilim));
     }
 
-    /// <summary>
-    /// Form doğrulaması sunucuda tekrarlanır; geçerliyse veritabanına yazılır.
-    /// </summary>
+    /// <summary>Form doğrulaması sunucuda tekrarlanır; geçerliyse veritabanına yazılır.</summary>
     [HttpPost("kayitlar")]
     [ProducesResponseType(typeof(UretimKayitYanit), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
